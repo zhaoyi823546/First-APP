@@ -28,4 +28,11 @@ dependencies {
     implementation project(':latte-ec')
     annotationProcessor project(':latte-comlier')
     implementation project(path: ':latte-core')
+    implementation 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
+    //ButterKnife 依赖
+    implementation 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    //fragment 依赖
+    implementation 'me.yokeyword:fragmentation:1.3.3'
+    implementation 'me.yokeyword:fragmentation-swipeback:1.3.3'
 }

@@ -3,7 +3,8 @@ package com.example.zhaoyi.festec;
 import android.app.Application;
 
 import com.app.Latte;
-
+import com.example.zhaoyi.latte_ec.icon.FontEcmodel;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
 /**
  * 项目名 FestEC2 on 2018/5/12.
  * 包名   com.example.zhaoyi.festec
@@ -16,6 +17,8 @@ public class ExampleAPP extends Application {
     public void onCreate() {
         super.onCreate();
         Latte.init(this)
+                .withIcon(new FontAwesomeModule())
+                .withIcon(new FontEcmodel())
                 .withApiHost("")
                 .configure();
     }
