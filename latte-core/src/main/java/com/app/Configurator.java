@@ -1,5 +1,7 @@
 package com.app;
 
+import android.util.Log;
+
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 
@@ -18,6 +20,7 @@ public class Configurator {
     private static final HashMap<String ,Object> LATTE_CONFIGS = new HashMap<>();
     private static final ArrayList<IconFontDescriptor> ICONS =new ArrayList<>();
     private Configurator(){
+        Log.i("zhaoyi","Configurator");
         LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(),false);
     }
     //线程安全的懒汉模式
@@ -37,6 +40,7 @@ public class Configurator {
         LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(),true);
     }
    public final Configurator withApiHost(String host){
+       Log.i("zhaoyi","withApiHost = "+host);
         LATTE_CONFIGS.put(ConfigType.API_HOST.name(),host);
         return this;
    }

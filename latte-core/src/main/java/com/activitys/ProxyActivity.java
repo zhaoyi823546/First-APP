@@ -3,6 +3,7 @@ package com.activitys;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.ContentFrameLayout;
+import android.util.Log;
 
 import com.delegates.LatteDelegate;
 import com.example.zhaoyi.latte_core.R;
@@ -21,6 +22,7 @@ public abstract class ProxyActivity extends SupportActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.i("zhaoyi","ProxyActivity");
         super.onCreate(savedInstanceState);
         initContainer(savedInstanceState);
     }
@@ -29,6 +31,7 @@ public abstract class ProxyActivity extends SupportActivity {
         container.setId(R.id.delegate_container);
         setContentView(container);
         if (savedInstanceState == null){
+            Log.i("zhaoyi","initContainer");
             loadRootFragment(R.id.delegate_container,setRootDelegare());
         }
     }
