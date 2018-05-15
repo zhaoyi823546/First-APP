@@ -1,10 +1,15 @@
 package com.net;
 
+import android.content.Context;
+
+import com.app.ConfigType;
 import com.net.callback.IError;
 import com.net.callback.IFailure;
 import com.net.callback.IRequest;
 import com.net.callback.ISuccess;
 import com.net.callback.RequestCallbacks;
+import com.ui.LatteLoader;
+import com.ui.LoaderStyle;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -28,6 +33,8 @@ public class RestClient {
     private final IFailure FAILRE;
     private final IError   ERROR;
     private final RequestBody  BODY;
+    private final LoaderStyle LOADER_STYLE;
+    private final Context CONTEXT;
 
     public RestClient(String URL,
                       Map<String, Object> params,
@@ -35,7 +42,9 @@ public class RestClient {
                       ISuccess success,
                       IFailure failure,
                       IError error,
-                      RequestBody body) {
+                      RequestBody body,
+                      Context context,
+                      LoaderStyle loaderStyle) {
         this.URL = URL;
         PARAMS.putAll(params);
         this.REQUEST = request;
@@ -43,6 +52,8 @@ public class RestClient {
         this.FAILRE = failure;
         this.ERROR = error;
         this.BODY = body;
+        this.CONTEXT = context;
+        this.LOADER_STYLE = loaderStyle;
     }
 
     public static RestClientBuilder builder(){
@@ -54,6 +65,9 @@ public class RestClient {
 
         if (REQUEST != null){
             REQUEST.onRequestStart();
+        }
+        if (LOADER_STYLE != null){
+            LatteLoader.showLoading(CONTEXT,LOADER_STYLE);
         }
         switch (method){
             case GET:
@@ -82,7 +96,8 @@ public class RestClient {
                 REQUEST,
                 SUCCESS,
                 FAILRE,
-                ERROR
+                ERROR,
+                LOADER_STYLE
         );
    }
    public final void get(){
