@@ -1,5 +1,7 @@
 package com.net.download;
 
+import android.os.AsyncTask;
+
 import com.net.RestCreator;
 import com.net.callback.IError;
 import com.net.callback.IFailure;
@@ -55,12 +57,28 @@ public class DownloadHandler {
         RestCreator.getRestService().download(URL,PARAMS).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
+                if (response.isSuccessful()){
+                    final SavaFileTask task = new SavaFileTask(REQUEST,SUCCESS);
+                    final ResponseBody responseBody = response.body();
+                    task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,DOWNLOAD_DIR,EXTENSION,response,NAME);
+                    //这里一定要注意判断，否则文件下载不全
+                    if (task.isCancelled()){
+                        if (REQUEST != null){
+                            REQUEST.onRequestEnd();
+                        }
+                    }
+                }else {
+                    if (ERROR != null){
+                        ERROR.onError(response.code(),response.message());
+                    }
+                }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                 if (FAILRE != null){
+                     FAILRE.onFailure();
+                 }
             }
         });
     }
