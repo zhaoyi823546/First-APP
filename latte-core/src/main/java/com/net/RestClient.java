@@ -8,6 +8,7 @@ import com.net.callback.IFailure;
 import com.net.callback.IRequest;
 import com.net.callback.ISuccess;
 import com.net.callback.RequestCallbacks;
+import com.net.download.DownloadHandler;
 import com.ui.LatteLoader;
 import com.ui.LoaderStyle;
 
@@ -20,6 +21,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.http.PUT;
 
 /**
  * 项目名 FestEC2 on 2018/5/14.
@@ -154,4 +156,14 @@ public class RestClient {
     public final void delete(){
         request(HttpMethod.DELETE);
     }
+    public final void upload(){
+        request(HttpMethod.UPLOAD);
+    }
+    public final void download(){
+        new DownloadHandler(URL,REQUEST,DOWNLOAD_DIR,EXTENSION,
+                NAME,SUCCESS,FAILRE,ERROR).handleDownload();
+    }
+
+
+
 }
