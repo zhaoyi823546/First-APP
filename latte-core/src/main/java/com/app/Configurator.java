@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.WeakHashMap;
 
+import okhttp3.Interceptor;
+
 /**
  * 项目名 FestEC2 on 2018/5/12.
  * 包名   com.app
@@ -17,8 +19,9 @@ import java.util.WeakHashMap;
  * 描述  TODO
  */
 public class Configurator {
-    private static final HashMap<String ,Object> LATTE_CONFIGS = new HashMap<>();
+    private static final HashMap<Object ,Object> LATTE_CONFIGS = new HashMap<>();
     private static final ArrayList<IconFontDescriptor> ICONS =new ArrayList<>();
+    private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
     private Configurator(){
         Log.i("zhaoyi","Configurator");
         LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(),false);
@@ -27,7 +30,7 @@ public class Configurator {
     public static Configurator getInstance(){
         return Holder.INSTANCE;
     }
-    final HashMap<String,Object> getLatteConfigs (){
+    final HashMap<Object,Object> getLatteConfigs (){
         return LATTE_CONFIGS;
     }
 
@@ -50,9 +53,17 @@ public class Configurator {
             throw new RuntimeException("Configuration is not ready,call config");
         }
    }
-   final <T> T getConfiguration(Enum<ConfigType> key){
+   final <T> T getConfiguration(Object key){
+        for (int i=0;i<LATTE_CONFIGS.size();i++){
+            Log.i("fanxina","key = "+ LATTE_CONFIGS.keySet());
+        }
         checkConfiguration();
-        return (T) LATTE_CONFIGS.get(key.name());
+        Log.i("fanxina","LATTE_CONFIGS==null   "+(LATTE_CONFIGS==null)+ "key= "+ key);
+        final Object value = LATTE_CONFIGS.get(key);
+        if (value == null){
+            throw  new NullPointerException(key.toString()+"IS NULL");
+        }
+        return (T) LATTE_CONFIGS.get(key);
    }
    private void initIcons(){
         if (ICONS.size() > 0){
@@ -66,4 +77,20 @@ public class Configurator {
         ICONS.add(descriptor);
         return this;
    }
+   public final Configurator withInterceptor(Interceptor interceptor){
+        INTERCEPTORS.add(interceptor);
+        LATTE_CONFIGS.put(ConfigType.INTERCEPTOR,INTERCEPTORS);
+        return this;
+   }
+
+    public final Configurator withInterceptor(ArrayList<Interceptor> interceptors){
+        INTERCEPTORS.addAll(interceptors);
+        LATTE_CONFIGS.put(ConfigType.INTERCEPTOR,INTERCEPTORS);
+        return this;
+    }
+    public final Configurator withLoaderDelayed(long delayed){
+         LATTE_CONFIGS.put(ConfigType.LOADER_DELAYED,delayed);
+         return this;
+    }
+
 }

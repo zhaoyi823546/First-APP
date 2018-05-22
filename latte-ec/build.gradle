@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'com.jakewharton.butterknife'
 android {
     compileSdkVersion 26
 
@@ -33,4 +33,16 @@ dependencies {
     implementation project(':latte-core')
     implementation 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
     implementation 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
+    // 如果想使用SwipeBack 滑动边缘退出Fragment/Activity功能，完整的添加规则如下：
+    implementation 'me.yokeyword:fragmentation:1.3.3'
+    // swipeback基于fragmentation, 如果是自定制SupportActivity/Fragment，则参照SwipeBackActivity/Fragment实现即可
+    implementation 'me.yokeyword:fragmentation-swipeback:1.3.3'
+    //ButterKnife 依赖
+    implementation 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    //baner 依赖
+    implementation 'com.bigkoo:convenientbanner:2.0.5'
+    //Json 依赖
+    implementation 'com.alibaba:fastjson:1.2.31'
 }
