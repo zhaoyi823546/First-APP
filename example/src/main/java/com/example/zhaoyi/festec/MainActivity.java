@@ -11,6 +11,7 @@ import com.app.Latte;
 import com.delegates.LatteDelegate;
 import com.example.zhaoyi.latte_ec.launcher.LauncherDelegate;
 import com.example.zhaoyi.latte_ec.launcher.LauncherScrollDeleagte;
+import com.example.zhaoyi.latte_ec.sign.SignUpDelegate;
 
 public class MainActivity extends ProxyActivity{
     @Override
@@ -27,7 +28,8 @@ public class MainActivity extends ProxyActivity{
     public LatteDelegate setRootDelegare() {
         Log.i("zhaoyi","MainActivity");
        // return new ExampleDelegate();
-        return new LauncherDelegate();
+       //return new LauncherDelegate();
+         return new SignUpDelegate();
     }
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
