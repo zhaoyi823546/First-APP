@@ -6,38 +6,29 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Toast;
 
-import com.app.Latte;
 import com.delegates.LatteDelegate;
 import com.example.zhaoyi.latte_ec.R;
 import com.example.zhaoyi.latte_ec.R2;
 import com.net.RestClient;
 import com.net.callback.ISuccess;
-import com.ui.LatteLoader;
 import com.util.log.LatteLogger;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 项目名 FestEC2 on 2018/5/23.
+ * 项目名 FestEC2 on 2018/5/24.
  * 包名   com.example.zhaoyi.latte_ec.sign
  * 创建者   82354
- * 创建时间   2018/5/23 14:43
+ * 创建时间   2018/5/24 9:22
  * 描述  TODO
  */
-public class SignUpDelegate extends LatteDelegate {
-    @BindView(R2.id.edit_sign_up_name)
-    TextInputEditText mName = null;
-    @BindView(R2.id.edit_sign_up_email)
+public class SignInDelegate extends LatteDelegate {
+    @BindView(R2.id.edit_sign_in_email)
     TextInputEditText mEmail = null;
-    @BindView(R2.id.edit_sign_up_password)
+    @BindView(R2.id.edit_sign_in_password)
     TextInputEditText mPassword = null;
-    @BindView(R2.id.edit_sign_up_re_password)
-    TextInputEditText mRePassword = null;
-    @BindView(R2.id.edit_sign_up_phone)
-    TextInputEditText mPhone = null;
     private ISignListener mISignListener = null;
     @Override
     public void onAttach(Activity activity) {
@@ -47,8 +38,8 @@ public class SignUpDelegate extends LatteDelegate {
         }
     }
 
-    @OnClick(R2.id.btn_sign_up)
-    void onClickSignUp(){
+    @OnClick(R2.id.btn_sign_in)
+    void onClickSignIn(){
         if (checkForm()){
             RestClient.builder()
                     .url("sign_up")
@@ -57,43 +48,31 @@ public class SignUpDelegate extends LatteDelegate {
                         @Override
                         public void onSuccess(String response) {
                             LatteLogger.json("USER_PROFILE",response);
-                            SignHandler.onSignUp(response,mISignListener);
+                            SignHandler.onSignIn(response,mISignListener);
                         }
                     })
                     .build()
                     .post();
-           // Toast.makeText(getContext(),"点击你了",Toast.LENGTH_LONG).show();
+            // Toast.makeText(getContext(),"点击你了",Toast.LENGTH_LONG).show();
         }
     }
+    @OnClick(R2.id.icon_sign_we_chat)
+    void onClickWeChat(){
 
-    @OnClick(R2.id.tv_link_sign_in)
+    }
+    @OnClick(R2.id.tv_link_sign_up)
     void onClickLink(){
-        start(new SignInDelegate());
+        start(new SignUpDelegate());
     }
     private boolean checkForm(){
-        final String name = mName.getText().toString();
         final String email = mEmail.getText().toString();
-        final String phone = mPhone.getText().toString();
         final String password = mPassword.getText().toString();
-        final String rePassword = mRePassword.getText().toString();
         boolean isPass = true;
-        if (name.isEmpty()){
-            mName.setError("请输入姓名");
-            isPass = false;
-        }else {
-            mName.setError(null);
-        }
         if (email.isEmpty()||!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             mEmail.setError("错误的邮箱格式");
             isPass = false;
         }else{
             mEmail.setError(null);
-        }
-        if (phone.isEmpty()||phone.length()!=11){
-            mPhone.setError("手机号码错误");
-            isPass = false;
-        }else {
-            mPhone.setError(null);
         }
         if (password.isEmpty()||password.length()<6){
             mPassword.setError("请填写至少6位数密码");
@@ -101,19 +80,11 @@ public class SignUpDelegate extends LatteDelegate {
         }else {
             mPassword.setError(null);
         }
-        if (rePassword.isEmpty()||rePassword.length()<6||!(rePassword.equals(password))){
-            mRePassword.setError("密码验证错误");
-            isPass = false;
-        }else {
-            mRePassword.setError(null);
-        }
         return isPass;
     }
-
     @Override
     public Object setLayout() {
-        return R.layout.delegate_sign_up;
-
+        return R.layout.delegate_sign_in;
     }
 
     @Override

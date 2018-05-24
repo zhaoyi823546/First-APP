@@ -58,6 +58,8 @@ dependencies {
     implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
     //Json 依赖
     implementation 'com.alibaba:fastjson:1.2.31'
+    //Log
+    implementation 'com.orhanobut:logger:2.2.0'
 
 
 }

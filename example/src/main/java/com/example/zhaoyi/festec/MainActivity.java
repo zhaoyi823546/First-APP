@@ -11,9 +11,12 @@ import com.app.Latte;
 import com.delegates.LatteDelegate;
 import com.example.zhaoyi.latte_ec.launcher.LauncherDelegate;
 import com.example.zhaoyi.latte_ec.launcher.LauncherScrollDeleagte;
+import com.example.zhaoyi.latte_ec.sign.ISignListener;
 import com.example.zhaoyi.latte_ec.sign.SignUpDelegate;
+import com.ui.launcher.ILauncherListener;
+import com.ui.launcher.OnLauncherFinishTag;
 
-public class MainActivity extends ProxyActivity{
+public class MainActivity extends ProxyActivity implements ISignListener ,ILauncherListener{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,28 @@ public class MainActivity extends ProxyActivity{
        // return new ExampleDelegate();
        //return new LauncherDelegate();
          return new SignUpDelegate();
+    }
+
+    @Override
+    public void onSignInSuccess() {
+
+    }
+
+    @Override
+    public void onSignUpSuccess() {
+        Toast.makeText(this,"注册成功",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onLauncherFinish(OnLauncherFinishTag tag) {
+        switch (tag){
+            case SIGNED:
+                break;
+            case NOT_SIGNED:
+                break;
+            default:
+                break;
+        }
     }
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
